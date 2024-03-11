@@ -1,0 +1,11 @@
+Instalando o cypress
+yarn init			e preencha description e author
+yarn add cypress -D		
+code .
+yarn cypress open
+
+Instalando o plugin de api do cypress
+npm i cypress-plugin-api -D
+
+Instala o plugin dotenv pra poder centralizar todos as informações sensíveis em um arquivo .env e depois deixar ele no gitignore
+npm i dotenv -D

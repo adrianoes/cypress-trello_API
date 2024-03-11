@@ -1,0 +1,13 @@
+{
+  "name": "trello-e2e",
+  "version": "1.0.0",
+  "description": "Projeto de automação de testes e2e da UI e via API da página real do Trello",
+  "main": "index.js",
+  "author": "Adriano Santos",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.6.6",
+    "cypress-plugin-api": "^2.11.1",
+    "dotenv": "^16.4.5"
+  }
+}
