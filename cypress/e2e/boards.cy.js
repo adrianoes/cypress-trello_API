@@ -9,10 +9,10 @@ describe('/boards', () => {
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
             cy.log(board_id)
-            // Create a Board API test ends here, however I'll keep the delete request so my board will no be mess up
+            // Create a Board API test ends here, however I'll keep the delete request so my board will no be messed up
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
@@ -25,7 +25,7 @@ describe('/boards', () => {
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
             cy.log(board_id)
-            cy.api({                
+            cy.api({
                 method: 'GET',
                 url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
@@ -33,7 +33,7 @@ describe('/boards', () => {
                 cy.log(JSON.stringify(response.body.name))
                 cy.log(board_id)
             })
-            cy.api({                
+            cy.api({
                 method: 'DELETE',
                 url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
@@ -48,7 +48,7 @@ describe('/boards', () => {
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
             cy.log(board_id)
-            cy.api({                
+            cy.api({
                 method: 'PUT',
                 url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
                 body: {
@@ -58,7 +58,7 @@ describe('/boards', () => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body.name))
             })
-            cy.api({                
+            cy.api({
                 method: 'DELETE',
                 url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
@@ -73,7 +73,7 @@ describe('/boards', () => {
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
             cy.log(board_id)
-            cy.api({                
+            cy.api({
                 method: 'DELETE',
                 url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
