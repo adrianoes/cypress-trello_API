@@ -12,6 +12,5 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl:"https://api.trello.com",
-
   },
 });
