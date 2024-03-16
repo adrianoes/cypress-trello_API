@@ -3,7 +3,11 @@ describe('/checklists', () => {
     const key = `${Cypress.env('trelloKey')}`
 
     it('Create a Checklist', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -19,7 +23,7 @@ describe('/checklists', () => {
                 cy.log(list_id)
                 cy.api({
                     method: 'POST',
-                    url: '/1/cards?idList=' + list_id + '&key='  + key + '&token=' + token,
+                    url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
                     body: {
                         name: "myCard1"
                     }
@@ -30,7 +34,7 @@ describe('/checklists', () => {
                     cy.log(card_id)
                     cy.api({
                         method: 'POST',
-                        url: '/1/checklists?idCard=' + card_id + '&key='  + key + '&token=' + token,
+                        url: '/1/checklists?idCard=' + card_id + '&key=' + key + '&token=' + token,
                         body: {
                             name: "myChecklist1"
                         }
@@ -46,25 +50,29 @@ describe('/checklists', () => {
                             expect(response.status).to.eq(200)
                         })
                     })
-                    cy.api({                
+                    cy.api({
                         method: 'DELETE',
                         url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
                     }).then(response => {
                         expect(response.status).to.eq(200)
                     })
-                })                
+                })
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
         })
-    })   
-    
+    })
+
     it('Get a Checklist', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -80,7 +88,7 @@ describe('/checklists', () => {
                 cy.log(list_id)
                 cy.api({
                     method: 'POST',
-                    url: '/1/cards?idList=' + list_id + '&key='  + key + '&token=' + token,
+                    url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
                     body: {
                         name: "myCard1"
                     }
@@ -91,7 +99,7 @@ describe('/checklists', () => {
                     cy.log(card_id)
                     cy.api({
                         method: 'POST',
-                        url: '/1/checklists?idCard=' + card_id + '&key='  + key + '&token=' + token,
+                        url: '/1/checklists?idCard=' + card_id + '&key=' + key + '&token=' + token,
                         body: {
                             name: "myChecklist1"
                         }
@@ -115,25 +123,29 @@ describe('/checklists', () => {
                             expect(response.status).to.eq(200)
                         })
                     })
-                    cy.api({                
+                    cy.api({
                         method: 'DELETE',
                         url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
                     }).then(response => {
                         expect(response.status).to.eq(200)
                     })
-                })                
+                })
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
         })
-    })  
+    })
 
     it('Update a Checklist - name', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -149,7 +161,7 @@ describe('/checklists', () => {
                 cy.log(list_id)
                 cy.api({
                     method: 'POST',
-                    url: '/1/cards?idList=' + list_id + '&key='  + key + '&token=' + token,
+                    url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
                     body: {
                         name: "myCard1"
                     }
@@ -160,7 +172,7 @@ describe('/checklists', () => {
                     cy.log(card_id)
                     cy.api({
                         method: 'POST',
-                        url: '/1/checklists?idCard=' + card_id + '&key='  + key + '&token=' + token,
+                        url: '/1/checklists?idCard=' + card_id + '&key=' + key + '&token=' + token,
                         body: {
                             name: "myChecklist1"
                         }
@@ -187,25 +199,29 @@ describe('/checklists', () => {
                             expect(response.status).to.eq(200)
                         })
                     })
-                    cy.api({                
+                    cy.api({
                         method: 'DELETE',
                         url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
                     }).then(response => {
                         expect(response.status).to.eq(200)
                     })
-                })                
+                })
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
         })
-    }) 
+    })
 
     it('Delete a Checklist', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -221,7 +237,7 @@ describe('/checklists', () => {
                 cy.log(list_id)
                 cy.api({
                     method: 'POST',
-                    url: '/1/cards?idList=' + list_id + '&key='  + key + '&token=' + token,
+                    url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
                     body: {
                         name: "myCard1"
                     }
@@ -232,7 +248,7 @@ describe('/checklists', () => {
                     cy.log(card_id)
                     cy.api({
                         method: 'POST',
-                        url: '/1/checklists?idCard=' + card_id + '&key='  + key + '&token=' + token,
+                        url: '/1/checklists?idCard=' + card_id + '&key=' + key + '&token=' + token,
                         body: {
                             name: "myChecklist1"
                         }
@@ -248,22 +264,22 @@ describe('/checklists', () => {
                             expect(response.status).to.eq(200)
                         })
                     })
-                    cy.api({                
+                    cy.api({
                         method: 'DELETE',
                         url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
                     }).then(response => {
                         expect(response.status).to.eq(200)
                     })
-                })                
+                })
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
         })
-    }) 
+    })
 })
 
 

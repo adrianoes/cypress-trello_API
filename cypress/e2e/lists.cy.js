@@ -3,7 +3,11 @@ describe('/lists', () => {
     const key = `${Cypress.env('trelloKey')}`
 
     it('Create a List on a Board', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -20,7 +24,7 @@ describe('/lists', () => {
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
@@ -28,7 +32,11 @@ describe('/lists', () => {
     })
 
     it('Get a List', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -42,7 +50,7 @@ describe('/lists', () => {
                 cy.log(JSON.stringify(response.body.name))
                 const list_id = response.body.id
                 cy.log(list_id)
-                cy.api({                
+                cy.api({
                     method: 'GET',
                     url: '/1/lists/' + list_id + '?key=' + key + '&token=' + token,
                 }).then(response => {
@@ -53,7 +61,7 @@ describe('/lists', () => {
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
@@ -61,7 +69,11 @@ describe('/lists', () => {
     })
 
     it('Update a List - name', () => {
-        cy.createBoard().then(response => {
+        const board_name = 'myBoard123'
+        cy.api({
+            method: 'POST',
+            url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
+        }).then(response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body.name))
             const board_id = response.body.id
@@ -75,7 +87,7 @@ describe('/lists', () => {
                 cy.log(JSON.stringify(response.body.name))
                 const list_id = response.body.id
                 cy.log(list_id)
-                cy.api({                
+                cy.api({
                     method: 'PUT',
                     url: '/1/lists/' + list_id + '?key=' + key + '&token=' + token,
                     body: {
@@ -88,7 +100,7 @@ describe('/lists', () => {
             })
             cy.api({
                 method: 'DELETE',
-                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,                
+                url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
