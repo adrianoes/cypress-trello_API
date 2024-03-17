@@ -2,7 +2,7 @@ describe('/cards', () => {
     const token = `${Cypress.env('trelloToken')}`
     const key = `${Cypress.env('trelloKey')}`
 
-    it.only('Create a new Card', () => {
+    it('Create a new Card', () => {
         cy.createBoard()
         cy.createList()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
@@ -30,166 +30,65 @@ describe('/cards', () => {
         cy.deleteBoard()
     })
 
-
-it('Get a Card', () => {
-    const board_name = 'myBoard123'
-    cy.api({
-        method: 'POST',
-        url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
-    }).then(response => {
-        expect(response.status).to.eq(200)
-        cy.log(JSON.stringify(response.body.name))
-        const board_id = response.body.id
-        cy.log(board_id)
-        const list_name = 'myList666'
-        cy.api({
-            method: 'POST',
-            url: '/1/boards/' + board_id + '/lists?name=' + list_name + '&key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-            cy.log(JSON.stringify(response.body.name))
-            const list_id = response.body.id
-            cy.log(list_id)
+    it('Get a Card', () => {
+        cy.createBoard()
+        cy.createList()
+        cy.createCard()
+        cy.readFile('cypress/fixtures/testdata.json').then(response => {
+            const card_id = response.card_id;
+            cy.log(card_id);
             cy.api({
-                method: 'POST',
-                url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
+                method: 'GET',
+                url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
+            }).then(response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body.name))
+                cy.log(card_id)
+            })
+            cy.deleteCard()
+        })        
+        cy.deleteBoard()        
+    })
+
+    it('Update a Card - name', () => {
+        cy.createBoard()
+        cy.createList()
+        cy.createCard()
+        cy.readFile('cypress/fixtures/testdata.json').then(response => {
+            const card_id = response.card_id;
+            cy.log(card_id);
+            cy.api({
+                method: 'PUT',
+                 url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
                 body: {
-                    name: "myCard1"
+                    name: "myCard2"
                 }
             }).then(response => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body.name))
-                const card_id = response.body.id
                 cy.log(card_id)
-                cy.api({
-                    method: 'GET',
-                    url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
-                }).then(response => {
-                    expect(response.status).to.eq(200)
-                    cy.log(JSON.stringify(response.body.name))
-                    cy.log(card_id)
-                })
-                cy.api({
-                    method: 'DELETE',
-                    url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
-                }).then(response => {
-                    expect(response.status).to.eq(200)
-                })
             })
+            cy.deleteCard()
         })
-        cy.api({
-            method: 'DELETE',
-            url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-        })
-    })
-})
+        cy.deleteBoard()
+    })    
 
-it('Update a Card - name', () => {
-    const board_name = 'myBoard123'
-    cy.api({
-        method: 'POST',
-        url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
-    }).then(response => {
-        expect(response.status).to.eq(200)
-        cy.log(JSON.stringify(response.body.name))
-        const board_id = response.body.id
-        cy.log(board_id)
-        const list_name = 'myList666'
-        cy.api({
-            method: 'POST',
-            url: '/1/boards/' + board_id + '/lists?name=' + list_name + '&key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-            cy.log(JSON.stringify(response.body.name))
-            const list_id = response.body.id
-            cy.log(list_id)
+    it('Delete a Card', () => {
+        cy.createBoard()
+        cy.createList()
+        cy.createCard()
+        cy.readFile('cypress/fixtures/testdata.json').then(response => {
+            const card_id = response.card_id;
+            cy.log(card_id);
             cy.api({
-                method: 'POST',
-                url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
-                body: {
-                    name: "myCard1"
-                }
+                method: 'DELETE',
+                url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
             }).then(response => {
                 expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body.name))
-                const card_id = response.body.id
-                cy.log(card_id)
-                cy.api({
-                    method: 'PUT',
-                    url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
-                    body: {
-                        name: "myCard2"
-                    }
-                }).then(response => {
-                    expect(response.status).to.eq(200)
-                    cy.log(JSON.stringify(response.body.name))
-                    cy.log(card_id)
-                })
-                cy.api({
-                    method: 'DELETE',
-                    url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
-                }).then(response => {
-                    expect(response.status).to.eq(200)
-                })
             })
         })
-        cy.api({
-            method: 'DELETE',
-            url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-        })
-    })
-})
-
-it('Delete a Card', () => {
-    const board_name = 'myBoard123'
-    cy.api({
-        method: 'POST',
-        url: '/1/boards/?name=' + board_name + '&key=' + key + '&token=' + token,
-    }).then(response => {
-        expect(response.status).to.eq(200)
-        cy.log(JSON.stringify(response.body.name))
-        const board_id = response.body.id
-        cy.log(board_id)
-        const list_name = 'myList666'
-        cy.api({
-            method: 'POST',
-            url: '/1/boards/' + board_id + '/lists?name=' + list_name + '&key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-            cy.log(JSON.stringify(response.body.name))
-            const list_id = response.body.id
-            cy.log(list_id)
-            cy.api({
-                method: 'POST',
-                url: '/1/cards?idList=' + list_id + '&key=' + key + '&token=' + token,
-                body: {
-                    name: "myCard1"
-                }
-            }).then(response => {
-                expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body.name))
-                const card_id = response.body.id
-                cy.log(card_id)
-                cy.api({
-                    method: 'DELETE',
-                    url: '/1/cards/' + card_id + '?key=' + key + '&token=' + token,
-                }).then(response => {
-                    expect(response.status).to.eq(200)
-                })
-            })
-        })
-        cy.api({
-            method: 'DELETE',
-            url: '/1/boards/' + board_id + '?key=' + key + '&token=' + token,
-        }).then(response => {
-            expect(response.status).to.eq(200)
-        })
-    })
-})
+        cy.deleteBoard()
+    })    
 })
 
 
