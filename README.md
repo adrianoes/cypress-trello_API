@@ -1,4 +1,4 @@
-# trello-e2e
+# cypress-trello_API
 
 Sample project to demonstrate basic api tests using the trello api (https://developer.atlassian.com/cloud/trello/rest/). Some good practices were used here such as custom commands, hooks, fixture file so we can deal with a few values that are rewriten after every test, an env.json file (called in gitignore) so we can store sensitive information and a github secret so we can deal with this info in github actions.
 
