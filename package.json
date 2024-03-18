@@ -7,7 +7,6 @@
   "license": "MIT",
   "devDependencies": {
     "cypress": "^13.6.6",
-    "cypress-plugin-api": "^2.11.1",
-    "dotenv": "^16.4.5"
+    "cypress-plugin-api": "^2.11.1"
   }
 }

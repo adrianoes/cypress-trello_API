@@ -2,6 +2,7 @@ const token = `${Cypress.env('trelloToken')}`
 const key = `${Cypress.env('trelloKey')}`
 // environment variables are called here and in the test files because, in the test files, we also have raw code so we can control the configuration of each context (we keep raw code of the test and custom commands of the steps not directly related). We could make only custom commands into the test files, however this way validation code lines would be located in custom commands file and I thinks this is no good practice.
 // custom commands reduced 45% of number of lines of test files and improved legibility of tests. 
+// hooks added more 10% of number of lines of test files and improved legibility of tests. 
 
 Cypress.Commands.add('createBoard', () => {
     const board_name = 'myBoard123'

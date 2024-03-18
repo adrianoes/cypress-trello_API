@@ -3,6 +3,8 @@ describe('/boards', () => {
     const token = `${Cypress.env('trelloToken')}`
     const key = `${Cypress.env('trelloKey')}`
 
+    // beforeEach and afterEach were not used in this testfile because they would aplly only to get and update tests. for the for create, after withe delete command would be used and. For delete, before with create command wouuld be used. It would be more confused so I prefer to let it as it is.
+
     it('Create a Board', () => {
         // Altough the cy.createBoard() custom command exists, raw code was used here so we are able to focus only in this action if required. 
         const board_name = 'myBoard123'

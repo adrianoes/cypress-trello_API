@@ -2,10 +2,19 @@ describe('/checklists', () => {
     const token = `${Cypress.env('trelloToken')}`
     const key = `${Cypress.env('trelloKey')}`
 
-    it('Create a Checklist', () => {
+    beforeEach(function () {        
         cy.createBoard()
         cy.createList()
         cy.createCard()
+    });
+
+    afterEach(function () {  
+        cy.deleteCard()           
+        // Trello has provided no api request for deleting a list. Instead we will be deleting the whole board to keep the environment clean.
+        cy.deleteBoard()
+    });
+
+    it('Create a Checklist', () => {
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const card_id = response.card_id;
             const board_id = response.board_id;
@@ -29,16 +38,11 @@ describe('/checklists', () => {
                     "list_id": list_id
                 })
                 cy.deleteChecklist()
-            })
-            cy.deleteCard()
+            })            
         })
-        cy.deleteBoard()
     })   
 
     it('Get a Checklist', () => {
-        cy.createBoard()
-        cy.createList()
-        cy.createCard()
         cy.createChecklist()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const checklist_id = response.checklist_id;
@@ -52,15 +56,10 @@ describe('/checklists', () => {
                 cy.log(checklist_id)
             })
             cy.deleteChecklist()            
-        })
-        cy.deleteCard()
-        cy.deleteBoard()   
+        })   
     })
 
     it('Update a Checklist - name', () => {
-        cy.createBoard()
-        cy.createList()
-        cy.createCard()
         cy.createChecklist()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const checklist_id = response.checklist_id;
@@ -77,15 +76,10 @@ describe('/checklists', () => {
                 cy.log(checklist_id)
             })
             cy.deleteChecklist()            
-        })
-        cy.deleteCard()
-        cy.deleteBoard()   
+        })  
     })
 
     it('Delete a Checklist', () => {
-        cy.createBoard()
-        cy.createList()
-        cy.createCard()
         cy.createChecklist()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const checklist_id = response.checklist_id;
@@ -96,9 +90,7 @@ describe('/checklists', () => {
             }).then(response => {
                 expect(response.status).to.eq(200)
             })
-        })   
-        cy.deleteCard()
-        cy.deleteBoard()   
+        })    
     })
 })
 

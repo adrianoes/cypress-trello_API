@@ -2,9 +2,17 @@ describe('/cards', () => {
     const token = `${Cypress.env('trelloToken')}`
     const key = `${Cypress.env('trelloKey')}`
 
-    it('Create a new Card', () => {
+    beforeEach(function () {        
         cy.createBoard()
         cy.createList()
+    });
+
+    afterEach(function () {             
+        // Trello has provided no api request for deleting a list. Instead we will be deleting the whole board to keep the environment clean.
+        cy.deleteBoard()
+    });
+
+    it('Create a new Card', () => {
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const list_id = response.list_id;
             const board_id = response.board_id;
@@ -25,14 +33,11 @@ describe('/cards', () => {
                     "list_id": list_id
                 })               
             })
-            cy.deleteCard()
+            cy.deleteCard()             
         })
-        cy.deleteBoard()
     })
 
     it('Get a Card', () => {
-        cy.createBoard()
-        cy.createList()
         cy.createCard()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const card_id = response.card_id;
@@ -45,14 +50,11 @@ describe('/cards', () => {
                 cy.log(JSON.stringify(response.body.name))
                 cy.log(card_id)
             })
-            cy.deleteCard()
-        })        
-        cy.deleteBoard()        
+            cy.deleteCard() 
+        })      
     })
 
     it('Update a Card - name', () => {
-        cy.createBoard()
-        cy.createList()
         cy.createCard()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const card_id = response.card_id;
@@ -68,14 +70,11 @@ describe('/cards', () => {
                 cy.log(JSON.stringify(response.body.name))
                 cy.log(card_id)
             })
-            cy.deleteCard()
+            cy.deleteCard() 
         })
-        cy.deleteBoard()
     })    
 
     it('Delete a Card', () => {
-        cy.createBoard()
-        cy.createList()
         cy.createCard()
         cy.readFile('cypress/fixtures/testdata.json').then(response => {
             const card_id = response.card_id;
@@ -87,7 +86,6 @@ describe('/cards', () => {
                 expect(response.status).to.eq(200)
             })
         })
-        cy.deleteBoard()
     })    
 })
 
