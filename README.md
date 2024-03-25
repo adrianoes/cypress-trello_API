@@ -15,7 +15,7 @@ Sample project to demonstrate basic api tests using the trello api (https://deve
 - See "https://nodejs.org/en" and install the aforementioned Node.js version.
 - To use yarn packet manager, open windows prompt as admin and execute the "corepack enable" command.
 - "yarn init", to initiate a node project. You can configure it as you wish.
-- "yarn add cypress -D", to install cypress as a dev dependencie. 
+- "yarn add cypress -D", to install cypress as a dev dependency. 
 - "npm i cypress-plugin-api -D", to install cypress api plugin.
 
 # Tests
