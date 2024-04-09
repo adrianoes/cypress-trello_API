@@ -1,0 +1,29 @@
+name: 'Cypress Tests Workflow'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-electron-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get code
+      uses: actions/checkout@v3
+    - name: Write the cypress.env.json file
+        # use quotes around the secret, as its value
+        # is simply inserted as a string into the command
+      run: |
+        echo '${{ secrets.CYPRESS_TRELLO_ENV_CI }}' > cypress.env.json
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run E2E tests
+
+      run: yarn cypress run
+
